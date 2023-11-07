@@ -1,0 +1,78 @@
+<app-navbar></app-navbar>
+<div class="container">
+    <div class="header">
+        <h1>Servidor Anárquico | GlobalAnon</h1>
+        <p>
+            Bienvenido a nuestro servidor anárquico, donde cualquiera puede comentar cualquier cosa y crear salas para
+            sus amigos en el completo anonimato.
+        </p>
+    </div>
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Crear Sala
+    </button>
+
+    <h1>Salas Disponibles</h1>
+    <div class="form-group">
+        <label for="filtroNombre">Buscar por nombre de sala:</label>
+        <input type="text" placeholder="Ingrese nombre de las sala..." id="filtroNombre" [(ngModel)]="filtroNombre"
+            class="form-control">
+    </div>
+    <div class="container mx-auto mt-4">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-primary" (click)="cambiarOrden(true)">A - Z</button>
+            <button type="button" class="btn btn-primary" (click)="cambiarOrden(false)">Z - A</button>
+        </div>
+        <div class="container mx-auto mt-4">
+            <div class="row">
+                <ng-container *ngFor="let room of rooms | customOrder: ordenAscendente">
+                    <ng-container *ngIf="room.nombre.toLowerCase().includes(filtroNombre.toLowerCase())">
+                        <div class="col-md-4">
+                            <div class="d-flex flex-column">
+                                <div class="card mb-4" style="width: 18rem;">
+                                    <img [src]="'/assets/images/' + room.imagen" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ room.nombre }}</h5>
+                                        <h6 class="card-subtitle mb-2 text-white">{{ room.descripcion }}</h6>
+                                        <button class="btn btn-info" (click)="unirseASala(room.codigo)">Unirse</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Crear Nueva Sala</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form (ngSubmit)="createRoom()" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" id="nombre" name="nombre" [(ngModel)]="newRoom.nombre"
+                                class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcion">Descripción:</label>
+                            <input type="text" id="descripcion" name="descripcion" [(ngModel)]="newRoom.descripcion"
+                                class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="imagen">Imagen:</label>
+                            <input type="file" name="imagen" (change)="onFileSelected($event)" class="form-control">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,14 @@
+<div class="sala-list border rounded p-3 bg-light" style="height: 100vh;">
+    <h3>Salas Disponibles</h3>
+    <input type="text" [(ngModel)]="filtroNombre" placeholder="Buscar salas" class="form-control mb-3">
+    <ul class="list-unstyled" style="max-height: calc(100vh - 120px); overflow-y: auto;">
+        <li *ngFor="let sala of salas" class="mb-2 d-flex align-items-center">
+            <ng-container *ngIf="cumpleFiltro(sala)">
+              <img [src]="'/assets/images/' + sala.imagen" alt="{{sala.nombre}}" width="50" height="50" class="me-2 rounded-circle">
+              <button (click)="entrarASala(sala.codigo)" class="btn btn-sala" [ngClass]="{ 'selected': selectedSala && selectedSala.codigo === sala.codigo }">
+                {{ sala.nombre }}
+              </button>
+            </ng-container>
+        </li>
+    </ul>
+</div>

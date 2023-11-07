@@ -1,0 +1,160 @@
+<app-navbar></app-navbar>
+<link rel="stylesheet" href="https://twemoji.maxcdn.com/v/latest/twemoji.min.css" />
+<section style="background-color: #CDC4F9; height: 100vh;">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3" style="background-color: #CDC4F9;">
+        <app-salaslist></app-salaslist>
+      </div>
+      <div class="col-md-9" style="background-color: #CDC4F9;">
+        <div class="container py-3">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card" id="chat3" style="border-radius: 15px;">
+                <div class="card-header d-flex justify-content-between align-items-center" style="margin-bottom: 10px;">
+                  <div>
+                    <h5>{{ selectedRoomName }}</h5>
+                    <p>{{ welcomeMessage }}</p>
+                  </div>
+                  <div ngbDropdown class="d-flex flex-column align-items-end dropdown">
+                    <i type="button" id="dropdownMenuButton1" ngbDropdownToggle
+                      class="fa-solid fa-ellipsis-vertical no-caret"></i>
+                    <ul ngbDropdownMenu aria-labelledby="dropdownMenuButton1">
+                      <li><a ngbDropdownItem class="dropdown-item" href="#">Action</a></li>
+                      <li><a ngbDropdownItem class="dropdown-item" href="#">Another action</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="d-flex flex-row justify-content-start" *ngFor="let message of messages">
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                    alt="avatar 1" style="width: 45px; height: 100%;">
+                  <div class="d-flex flex-column align-items-start">
+                    <div class="d-flex align-items-center">
+                      <div class="message-bubble">
+                        {{ message.mensajes }}
+                        <div class="like-button" (click)="openReactionsModal()">
+                          <i class="fas fa-thumbs-up" id="like-button"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-muted d-flex justify-content-start align-items-center pe-3 pt-3 mt-2">
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                    alt="avatar 3" style="width: 40px; height: 100%;">
+                  <input required="" type="text" class="form-control form-control-lg" id="exampleFormControlInput2"
+                    placeholder="Type message" [(ngModel)]="selectedMessage" (keyup.enter)="onEnterKey()">
+                  <div class="emoji-container">
+                    <a type="button" class="ms-3 text-muted" (click)="toggleEmojiSelector()">
+                      <i class="fas fa-smile"></i>
+                    </a>
+                    <div class="emoji-selector" [ngClass]="{'active': showEmojiSelector}">
+                      <div class="emoji-button-container">
+                        <button (click)="selectCategory('personasFantasias')" class="emoji-button transparent-button">
+                          🧑‍🤝‍🧑
+                        </button>
+                        <button (click)="selectCategory('gestosEmociones')" class="emoji-button transparent-button">
+                          😃
+                        </button>
+                        <button (click)="selectCategory('emojisPrendasAccesorios')"
+                          class="emoji-button transparent-button">
+                          👚
+                        </button>
+                        <button (click)="selectCategory('emojisAdicionales')" class="emoji-button transparent-button">
+                          🥱
+                        </button>
+                        <button (click)="selectCategory('emojisAnimalesNaturaleza')"
+                          class="emoji-button transparent-button">
+                          🐶
+                        </button>
+                        <button (click)="selectCategory('emojisAlimentosBebidas')"
+                          class="emoji-button transparent-button">
+                          🍏
+                        </button>
+                        <button (click)="selectCategory('emojisActividadesDeportes')"
+                          class="emoji-button transparent-button">
+                          ⚽️
+                        </button>
+                        <button (click)="selectCategory('emojisTransporteLugares')"
+                          class="emoji-button transparent-button">
+                          🚗
+                        </button>
+                        <button (click)="selectCategory('emojisTecnologiaObjetos')"
+                          class="emoji-button transparent-button">
+                          ⌚️
+                        </button>
+                        <button (click)="selectCategory('emojisColoresNumerosSimbolos')"
+                          class="emoji-button transparent-button">
+                          ❤️
+                        </button>
+                        <button (click)="selectCategory('emojisBanderas')" class="emoji-button transparent-button">
+                          🏳️
+                        </button>
+                      </div>
+                      <div *ngIf="selectedCategory === 'personasFantasias'" class="emoji-list">
+                        <ng-container *ngFor="let emoji of emojisPersonasFantasias">
+                          <span (click)="selectEmoji(emoji); onEmojiClick($event)" class="emoji-item">{{ emoji }}</span>
+                        </ng-container>
+                      </div>
+                      <div *ngIf="selectedCategory === 'emojisPrendasAccesorios'" class="emoji-list">
+                        <ng-container *ngFor="let emoji of emojisPrendasAccesorios">
+                          <span (click)="selectEmoji(emoji); onEmojiClick($event)" class="emoji-item">{{ emoji }}</span>
+                        </ng-container>
+                      </div>
+
+                      <div *ngIf="selectedCategory === 'gestosEmociones'" class="emoji-list">
+                        <ng-container *ngFor="let emoji of emojisGestosEmociones">
+                          <span (click)="selectEmoji(emoji); onEmojiClick($event)" class="emoji-item">{{ emoji }}</span>
+                        </ng-container>
+                      </div>
+                      <div *ngIf="selectedCategory === 'emojisAdicionales'" class="emoji-list">
+                        <ng-container *ngFor="let emoji of emojisAdicionales">
+                          <span (click)="selectEmoji(emoji); onEmojiClick($event)" class="emoji-item">{{ emoji }}</span>
+                        </ng-container>
+                      </div>
+                      <div *ngIf="selectedCategory === 'emojisAnimalesNaturaleza'" class="emoji-list">
+                        <ng-container *ngFor="let emoji of emojisAnimalesNaturaleza">
+                          <span (click)="selectEmoji(emoji); onEmojiClick($event)" class="emoji-item">{{ emoji }}</span>
+                        </ng-container>
+                      </div>
+                      <div *ngIf="selectedCategory === 'emojisAlimentosBebidas'" class="emoji-list">
+                        <ng-container *ngFor="let emoji of emojisAlimentosBebidas">
+                          <span (click)="selectEmoji(emoji); onEmojiClick($event)" class="emoji-item">{{ emoji }}</span>
+                        </ng-container>
+                      </div>
+                      <div *ngIf="selectedCategory === 'emojisActividadesDeportes'" class="emoji-list">
+                        <ng-container *ngFor="let emoji of emojisActividadesDeportes">
+                          <span (click)="selectEmoji(emoji); onEmojiClick($event)" class="emoji-item">{{ emoji }}</span>
+                        </ng-container>
+                      </div>
+                      <div *ngIf="selectedCategory === 'emojisTransporteLugares'" class="emoji-list">
+                        <ng-container *ngFor="let emoji of emojisTransporteLugares">
+                          <span (click)="selectEmoji(emoji); onEmojiClick($event)" class="emoji-item">{{ emoji }}</span>
+                        </ng-container>
+                      </div>
+                      <div *ngIf="selectedCategory === 'emojisTecnologiaObjetos'" class="emoji-list">
+                        <ng-container *ngFor="let emoji of emojisTecnologiaObjetos">
+                          <span (click)="selectEmoji(emoji); onEmojiClick($event)" class="emoji-item">{{ emoji }}</span>
+                        </ng-container>
+                      </div>
+                      <div *ngIf="selectedCategory === 'emojisColoresNumerosSimbolos'" class="emoji-list">
+                        <ng-container *ngFor="let emoji of emojisColoresNumerosSimbolos">
+                          <span (click)="selectEmoji(emoji); onEmojiClick($event)" class="emoji-item">{{ emoji }}</span>
+                        </ng-container>
+                      </div>
+                      <div *ngIf="selectedCategory === 'emojisBanderas'" class="emoji-list">
+                        <ng-container *ngFor="let emoji of emojisBanderas">
+                          <span (click)="selectEmoji(emoji); onEmojiClick($event)" class="emoji-item">{{ emoji }}</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn btn-link" (click)="onEnterKey()"><i class="fas fa-paper-plane"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
